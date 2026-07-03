@@ -42,4 +42,35 @@ class AuthController extends Controller
             ]
         ], 200);
     }
+
+	// ADD REGISTER METHOD
+    public function register(Request $request)
+    {
+        $fields = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email',
+            'phone' => 'nullable|string',
+            'password' => 'required|string|min:6'
+        ]);
+
+        $user = User::create([
+            'name' => $fields['name'],
+            'email' => $fields['email'],
+            'phone' => $fields['phone'] ?? null,
+            'password' => Hash::make($fields['password']),
+            'type' => 'client' // New self-registrations default to client
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'status' => 'success',
+            'token' => $token,
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+                'type' => $user->type,
+            ]
+        ], 201);
+    }
 }
