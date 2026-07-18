@@ -11,27 +11,30 @@ return new class extends Migration
      */
     public function up(): void
         {
-            Schema::create('vehicules', function (Blueprint $table) {
+            
+    Schema::create('vehicules', function (Blueprint $table) {
         $table->id();
-        $table->string('name');                         // e.g., "Range Rover Sport"
-        $table->string('category');                     // car, bike, etc.
-        $table->string('type');                         // SUV, Luxury, Sport
-        $table->string('image')->nullable();            // Path to vehicle photo
-        $table->decimal('price', 8, 2);                 // Base price per day ($)
-        $table->integer('discount')->default(0);        // Percentage off (e.g., 15)
-        $table->text('description');                    
-        $table->json('features')->nullable();           // Array of tags (e.g., ["GPS", "Autopilot"])
-    
-        // Specifications Block
-        $table->integer('seats')->default(4);           
-        $table->string('transmission');                 // Manual / Automatic
-        $table->string('fuel_type');                    // Electric, Diesel, Petrol
-        $table->string('mileage');                      // e.g., "Unlimited" or "200km/day"
+        $table->string('brand');
+        $table->string('model');
+        $table->decimal('price_per_day', 8, 2);
+        $table->string('image_url')->nullable();
+        $table->boolean('is_available')->default(true);
+        
+        // We make all these nullable() so they are optional and won't cause crashes!
+        $table->string('name')->nullable();
+        $table->string('category')->nullable();
+        $table->string('type')->nullable();
+        $table->text('description')->nullable();
+        $table->integer('discount')->default(0);
+        $table->json('features')->nullable();
+        $table->integer('seats')->default(4);
+        $table->string('transmission')->nullable();
+        $table->string('fuel_type')->nullable();
+        $table->string('milrage')->nullable(); // Kept your exact spelling from the file
+        
         $table->timestamps();
-
-        });
-    }
-
+    });
+}
     /**
      * Reverse the migrations.
      */

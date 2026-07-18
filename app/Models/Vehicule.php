@@ -9,4 +9,11 @@ class Vehicule extends Model
 {
     /** @use HasFactory<\Database\Factories\VehiculeFactory> */
     use HasFactory;
+    protected $fillable = [
+        'brand',
+        'model',
+        'price_per_day',
+        'image_url',
+        'is_available',
+    ];
 }
